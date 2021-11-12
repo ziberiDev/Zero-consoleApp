@@ -1,38 +1,16 @@
-{
-  "1": {
+[
+  {
     "status": "Active/Inactive",
     "start": "dateformat",
     "end": "dateformat",
     "elapsed_time": "time",
     "fast_type": ""
   },
-  "1": {
-    "status": "Active/Inactive",
-    "start": "dateformat",
-    "end": "dateformat",
-    "elapsed_time": "time",
-    "fast_type": ""
-  },
-  "1": {
-    "status": "Active/Inactive",
-    "start": "dateformat",
-    "end": "dateformat",
-    "elapsed_time": "time",
-    "fast_type": ""
-  },
-  "1": {
-    "status": "Active/Inactive",
-    "start": "dateformat",
-    "end": "dateformat",
-    "elapsed_time": "time",
-    "fast_type": ""
-  },
-  "2": {
+  {
     "status": "Active/Inactive",
     "start": "dateformat",
     "end": "dateformat",
     "elapsed_time": "time",
     "fast_type": ""
   }
-
-}
+]

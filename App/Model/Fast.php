@@ -23,7 +23,6 @@ class Fast extends Model
         protected bool            $type,
         protected string|DateTime $start,
         protected string|DateTime $end,
-        public string             $name = "Denis"
     )
     {
 
@@ -44,13 +43,6 @@ class Fast extends Model
 
         return $this->$parameter;
     }
-
-
-
-
-
-
-
 }
 
 

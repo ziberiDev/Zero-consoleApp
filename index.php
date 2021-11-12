@@ -1,16 +1,20 @@
 <?php
+
+use App\Commands\CommandController;
+use App\Console\InputConsole;
+use App\Console\OutputConsole;
+use App\Store\StoreManager;
+
 require_once './vendor/autoload.php';
 
 
-$fast = new \App\Model\Fast(1, '2021-10-11 10:22:00', date('Y-m-d H:m:s'));
+//$fast = new \App\Model\Fast(1, '2021-10-11 10:22:00', date('Y-m-d H:m:s'));
 
-/*try {*/
+$commands = new CommandController(
+    new InputConsole(),
+    new OutputConsole(),
+    new StoreManager());
 
-$diff = $fast->end->diff($fast->start);
+$commands->run();
 
-/*var_dump($diff->format('Y-m-d H:i:s'));*/
-echo $diff->format('%Y %m months %d  %h  %i  %s ');
-/*} catch (\Exception $e) {
-    echo $e->getMessage();
-}*/
 
