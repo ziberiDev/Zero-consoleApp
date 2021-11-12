@@ -1,16 +1,16 @@
 [
   {
     "status": "Active/Inactive",
-    "start": "dateformat",
-    "end": "dateformat",
+    "start": "2022-12-05 12:12:00",
+    "end": "2022-12-05 12:12:00",
     "elapsed_time": "time",
-    "fast_type": ""
+    "type": "1"
   },
   {
     "status": "Active/Inactive",
     "start": "dateformat",
     "end": "dateformat",
     "elapsed_time": "time",
-    "fast_type": ""
+    "type": "1"
   }
 ]

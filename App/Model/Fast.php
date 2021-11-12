@@ -6,7 +6,7 @@ use DateTime;
 use Exception;
 
 
-class Fast extends Model
+class Fast extends FastModel
 {
 
     protected array $dates = [
@@ -14,19 +14,6 @@ class Fast extends Model
         'end'
     ];
 
-    protected array $guarded = [
-        "type"
-    ];
-
-
-    public function __construct(
-        protected bool            $type,
-        protected string|DateTime $start,
-        protected string|DateTime $end,
-    )
-    {
-
-    }
 
     /**
      * @param $parameter
@@ -35,13 +22,22 @@ class Fast extends Model
      */
     public function __get($parameter)
     {
-        if (in_array($parameter, $this->dates) && !in_array($parameter, $this->guarded)) {
+        if (in_array($parameter, $this->dates)) {
             return new DateTime($this->$parameter);
-        } elseif (in_array($parameter, $this->guarded)) {
-            throw new Exception('guarded property');
         }
 
         return $this->$parameter;
+    }
+
+    public function __toString()
+    {
+        return "
+        --------------------------------------
+        Status ($this->status)  \n\r
+        Started Fasting $this->start \n\r   
+        Fast Type $this->type 
+        --------------------------------------
+        ";
     }
 }
 

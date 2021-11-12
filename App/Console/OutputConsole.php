@@ -7,7 +7,7 @@ class OutputConsole
 
     public function write($text)
     {
-        echo $text . "\n\r";
+        echo sprintf("%s\n\r", $text);
     }
 
 }

@@ -5,7 +5,7 @@ namespace App\Commands;
 use App\Console\InputConsole;
 use App\Console\OutputConsole;
 use App\Interface\BaseCommandInterface;
-use App\Model\Fast;
+use App\Interface\FileManagerInterface;
 use App\Store\StoreManager;
 
 class CommandController implements BaseCommandInterface
@@ -24,15 +24,16 @@ class CommandController implements BaseCommandInterface
 
     private array $options = [
         "1" => "Create a fast",
-        "2" => "Create a fast",
-        "3" => "Create a fast",
+        "2" => "Start a fast",
         "4" => "Exit",
+        "5" => "List all fasts",
+
     ];
 
     public function __construct(
-        protected InputConsole  $input,
-        protected OutputConsole $output,
-        protected StoreManager  $store
+        protected InputConsole         $input,
+        protected OutputConsole        $output,
+        protected FileManagerInterface $store
     )
     {
     }
@@ -47,7 +48,7 @@ class CommandController implements BaseCommandInterface
             }
             $input = $this->input->getInput();
             if (key_exists($input, $this->commands) and $input != "4") {
-                $command = new $this->commands["$input"]($this->input, $this->output);
+                $command = new $this->commands["$input"]($this->input, $this->output, $this->store);
 
                 $command->run();
             } elseif ($input == "4") {
