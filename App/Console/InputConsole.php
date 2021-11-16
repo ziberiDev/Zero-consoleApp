@@ -9,7 +9,13 @@ class InputConsole
 
     public function getInput()
     {
-        return trim(fgets(STDIN), "\n\r");
+
+        //TODO:refactor
+
+        $stdin = fopen('php://stdin', 'r');
+
+
+        return trim(fgets($stdin), "\n\r");
     }
 
 

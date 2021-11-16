@@ -8,12 +8,10 @@ use Exception;
 
 class Fast extends FastModel
 {
-
     protected array $dates = [
         'start',
         'end'
     ];
-
 
     /**
      * @param $parameter
@@ -35,7 +33,7 @@ class Fast extends FastModel
         --------------------------------------
         Status ($this->status)  \n\r
         Started Fasting $this->start \n\r   
-        Fast Type $this->type 
+        Fast Type {$this->type->name} 
         --------------------------------------
         ";
     }

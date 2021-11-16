@@ -3,6 +3,7 @@
 namespace App\Store;
 
 
+use App\Enums\FastCategory;
 use App\Interface\FileManagerInterface;
 use App\Model\Collection;
 use App\Model\Fast;
@@ -29,8 +30,9 @@ class StoreManager implements FileManagerInterface
                 $fast->status,
                 $fast->start,
                 $fast->end,
-                $fast->elapsed_time,
-                $fast->type
+                FastCategory::LONG,
+                $fast->elapsed_time
+
             );
         }
         return new Collection($fastArray);

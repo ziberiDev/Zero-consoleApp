@@ -54,6 +54,7 @@ class CommandController implements BaseCommandInterface
             } elseif ($input == "4") {
                 $this->appRunning = false;
             }
+
             $this->run();
         }
 
