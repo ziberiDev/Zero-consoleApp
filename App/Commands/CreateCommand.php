@@ -5,16 +5,18 @@ namespace App\Commands;
 use App\Console\InputConsole;
 use App\Console\InputValidator;
 use App\Console\OutputConsole;
+use App\Enums\FastType;
 use App\Interface\BaseCommandInterface;
 use App\Model\Fast;
 use App\Store\StoreManager;
+use JetBrains\PhpStorm\Pure;
 
 class CreateCommand implements BaseCommandInterface
 {
     protected InputValidator $validator;
     protected Fast $newFast;
 
-    public function __construct(
+    #[Pure] public function __construct(
         protected InputConsole  $input,
         protected OutputConsole $output,
         protected StoreManager  $store
@@ -41,14 +43,29 @@ class CreateCommand implements BaseCommandInterface
             $this->output->write($message);
             $this->getStartDate();
         }
-        $this->output->write($userInput);
+
+
+        $this->newFast->set([
+            'start' => $userInput
+        ]);
+
     }
 
     protected function getFastType()
     {
         $this->output->write('Select a fast type');
+        $this->printFastTypes();
         $userInput = $this->input->getInput();
-        $this->output->write($userInput);
+        $this->newFast->set([
+            'type' => FastType::fromValue($userInput)
+        ]);
+    }
+
+    protected function printFastTypes()
+    {
+        foreach (FastType::getAll() as $const => $value) {
+            $this->output->write($const . "($value" . 'h)');
+        }
     }
 
 

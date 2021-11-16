@@ -4,29 +4,46 @@ namespace App\Commands;
 
 use App\Console\InputConsole;
 use App\Console\OutputConsole;
+use App\Enums\Status;
 use App\Interface\BaseCommandInterface;
 use App\Interface\FileManagerInterface;
-use App\Store\StoreManager;
+use App\Model\Collection;
+
 
 class CommandController implements BaseCommandInterface
 {
 
     public bool $appRunning = true;
 
-    /**
-     * @var array|string[]|BaseCommandInterface[]d
-     */
-    private array $commands = [
-        1 => CreateCommand::class,
-        4 => '',
-        5 => ListCommand::class
-    ];
+    protected bool $activeFasts = false;
 
-    private array $options = [
-        "1" => "Create a fast",
-        "2" => "Start a fast",
-        "4" => "Exit",
-        "5" => "List all fasts",
+    protected bool $canCreate = false;
+
+    protected bool $noCondition = true;
+
+
+    private array $menu = [
+        [
+            'option' => 'Create Fast',
+            'command' => CreateCommand::class,
+            'condition' => 'canCreate'
+        ],
+        [
+            'option' => 'Exit',
+            'command' => "",
+            'condition' => 'noCondition'
+        ],
+        [
+            'option' => 'Update an active fast',
+            'command' => UpdateCommand::class,
+            'condition' => 'activeFasts',
+            'operand' => '> 0'
+        ],
+        [
+            'option' => 'List all fasts',
+            'command' => ListCommand::class,
+            'condition' => 'noCondition'
+        ],
 
     ];
 
@@ -43,16 +60,14 @@ class CommandController implements BaseCommandInterface
     {
 
         while ($this->appRunning) {
-            foreach ($this->options as $key => $option) {
-                $this->output->write("[" . $key . "] " . $option);
-            }
+            $this->updateActiveFast();
+            $this->updateCanCreate();
+            $this->printMenu();
             $input = $this->input->getInput();
-            if (key_exists($input, $this->commands) and $input != "4") {
-                $command = new $this->commands["$input"]($this->input, $this->output, $this->store);
+            if (key_exists($input, $this->menu)) {
+                $command = new $this->menu[$input]['command']($this->input, $this->output, $this->store);
 
                 $command->run();
-            } elseif ($input == "4") {
-                $this->appRunning = false;
             }
 
             $this->run();
@@ -63,6 +78,57 @@ class CommandController implements BaseCommandInterface
     public function exit()
     {
         $this->appRunning = false;
+    }
+
+    public function printMenu()
+    {
+        $counter = 0;
+        foreach ($this->menu as $key => $bundle) {
+
+            $condition = $bundle['condition'];
+
+            if ($this->{$condition}) {
+
+                $this->output->write("[" . $key . "] " . $bundle['option']);
+
+
+            }
+
+        }
+    }
+
+    private function updateActiveFast()
+    {
+        /**
+         * @var $fasts Collection
+         */
+        $fasts = $this->store->getAll();
+        $fasts->each(callback: function ($key, $fast) {
+
+            if ($fast->status == Status::ACTIVE) {
+
+                $this->activeFasts = true;
+
+            }
+        });
+
+    }
+
+    private function updateCanCreate()
+    {
+        /**
+         * @var $fasts Collection
+         */
+        $fasts = $this->store->getAll();
+        $fasts->each(function ($key, $fast) {
+            if ($fast->status == Status::ACTIVE) {
+
+                $this->canCreate = false;
+                return;
+            }
+            $this->canCreate = true;
+
+        });
     }
 
 

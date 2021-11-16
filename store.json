@@ -1,16 +1,16 @@
 [
   {
-    "status": "Active/Inactive",
-    "start": "2022-12-05 12:12:00",
+    "status": 0,
+    "start": "2021-10-05 12:12:00",
     "end": "2022-12-05 12:12:00",
-    "elapsed_time": "time",
-    "type": "SHORT"
+    "elapsed_time": "00 years 1 months 11 days 06 h 41 min 47 sec",
+    "type": 20
   },
   {
-    "status": "Active/Inactive",
-    "start": "dateformat",
-    "end": "dateformat",
-    "elapsed_time": "time",
-    "type": "LONG"
+    "status": 0,
+    "start": "2021-10-05 12:12:00",
+    "end": "2021-10-05 12:12:00",
+    "elapsed_time": "00 years 1 months 11 days 06 h 41 min 47 sec",
+    "type": 12
   }
 ]

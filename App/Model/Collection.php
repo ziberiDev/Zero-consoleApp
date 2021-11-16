@@ -42,4 +42,14 @@ class Collection implements Iterator
     {
         return reset($this->items);
     }
+
+    public function each(callable $callback)
+    {
+        foreach ($this as $key => $value) {
+            if ($callback($key, $value) === null) {
+                return;
+            }
+        }
+        return $this;
+    }
 }

@@ -12,11 +12,10 @@ class InputValidator
     {
 
         $dateInputObject = DateTime::createFromFormat("Y-m-d H:i:s", $input);
-        $formattedDateInput = $dateInputObject->format("Y-m-d H:i:s");
         $today = new DateTime('NOW');
 
 
-        if (!$dateInputObject || ($formattedDateInput != $input)) {
+        if (!$dateInputObject || ($dateInputObject->format("Y-m-d H:i:s") != $input)) {
             return "Please enter valid format date.";
         } else if ($dateInputObject < $today) {
             return 'Please set starting date greater than today.';
