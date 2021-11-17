@@ -52,4 +52,9 @@ class Collection implements Iterator
         }
         return $this;
     }
+
+    public function toArray()
+    {
+        return $this->items;
+    }
 }
