@@ -16,7 +16,7 @@ class StoreManager implements FileManagerInterface
 
 
     /**
-     * @return Collection
+     * @return void
      */
     public function getAll(): Collection
     {
@@ -25,9 +25,10 @@ class StoreManager implements FileManagerInterface
         $storeFasts = json_decode(
             file_get_contents($this->file)
             , false);
-
+        if (!$storeFasts) {
+            return new Collection([]);
+        }
         foreach ($storeFasts as $fast) {
-
             $newFast = new Fast(
                 start: $fast->start,
                 status: $fast->status,
@@ -43,13 +44,6 @@ class StoreManager implements FileManagerInterface
                 $newFast->setElapsedTime($fast->elapsed_time);
             }
             $fastArray[] = $newFast;
-
-//            $fastArray[] = new Fast(
-//                start: $fast->start,
-//                status: $fast->status,
-//                end: $fast->end,
-//                type: $fast->type,
-//                elapsedTime: $fast->elapsed_time);
         }
         return new Collection($fastArray);
     }
@@ -59,8 +53,8 @@ class StoreManager implements FileManagerInterface
         // TODO: Implement select() method.
     }
 
-    public function write(object $fast)
+    public function write($fasts)
     {
-        // TODO: Implement write() method.
+        file_put_contents($this->file, json_encode($fasts));
     }
 }
