@@ -120,6 +120,10 @@ class CommandController implements BaseCommandInterface
          * @var $fasts Collection
          */
         $fasts = $this->store->getAll();
+        if (!$fasts) {
+            $this->canCreate = true;
+            return;
+        }
         $fasts->each(function ($key, $fast) {
             if ($fast->status == Status::ACTIVE) {
 
@@ -129,6 +133,7 @@ class CommandController implements BaseCommandInterface
             $this->canCreate = true;
 
         });
+
     }
 
 
