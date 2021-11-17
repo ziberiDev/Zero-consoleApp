@@ -29,7 +29,7 @@ class ListCommand implements BaseCommandInterface
     private function listFasts(Collection $fasts)
     {
         foreach ($fasts as $key => $fast) {
-            $this->output->write("fast number:$key $fast");
+            $this->output->write("fast number:$key {$fast->print()}");
         }
     }
 
