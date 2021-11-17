@@ -8,5 +8,5 @@ interface FileManagerInterface
 
     public function select($key);
 
-    public function write(object $fast);
+    public function write(array $fasts);
 }
