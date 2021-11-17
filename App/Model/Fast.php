@@ -19,7 +19,7 @@ class Fast implements FastModelInterface, JsonSerializable
 
     public function __construct(
         protected string $start = '',
-        protected int    $status = 0,
+        protected int    $status = 1,
         protected string $end = '',
         protected int    $type = 0,
         protected string $elapsedTime = '')

@@ -46,8 +46,8 @@ class Collection implements Iterator
     public function each(callable $callback)
     {
         foreach ($this as $key => $value) {
-            if ($callback($key, $value) === null) {
-                return;
+            if ($callback($key, $value) === false) {
+                return false;
             }
         }
         return $this;

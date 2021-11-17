@@ -1,3 +1,5 @@
+
+
 <?php
 
 use App\Commands\CommandController;
@@ -13,7 +15,6 @@ $commands = new CommandController(
     new OutputConsole(),
     new StoreManager()
 );
-
 $commands->run();
 
 

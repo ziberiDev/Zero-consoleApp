@@ -95,8 +95,6 @@ class CreateCommand implements BaseCommandInterface
         $this->newFast->set([
             'end' => $fastEndDate
         ]);
-
-
     }
 
     protected function saveFast()

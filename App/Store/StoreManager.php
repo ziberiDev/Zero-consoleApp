@@ -35,7 +35,7 @@ class StoreManager implements FileManagerInterface
                 end: $fast->end,
                 type: $fast->type
             );
-            if ($fast->status !== Status::ACTIVE) {
+            if ($fast->status === Status::ACTIVE && $newFast->start < $today) {
                 $newFast->setElapsedTime($today
                     ->diff($newFast->start)
                     ->format('%Y years %m months %d days %H h %i min %s sec'));
@@ -46,6 +46,24 @@ class StoreManager implements FileManagerInterface
             $fastArray[] = $newFast;
         }
         return new Collection($fastArray);
+    }
+
+    public function hasActiveFasts(): bool
+    {
+        $hasActive = false;
+        $fasts = $this->getAll();
+
+        if (!$fasts->toArray()) {
+            $hasActive = false;
+        }
+
+        $fasts->each(function ($key, $fast) use (&$hasActive) {
+            if ($fast->status == Status::ACTIVE) {
+                $hasActive = true;
+            }
+        });
+
+        return $hasActive;
     }
 
     public function select($key)
