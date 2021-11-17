@@ -15,6 +15,7 @@ class CreateCommand implements BaseCommandInterface
 {
     protected InputValidator $validator;
     protected Fast $newFast;
+    protected array $fastTypes;
 
     #[Pure] public function __construct(
         protected InputConsole  $input,
@@ -25,6 +26,7 @@ class CreateCommand implements BaseCommandInterface
         //TODO : Inject validator
         $this->validator = new InputValidator();
         $this->newFast = new Fast();
+        $this->setFastTypes();
 
     }
 
@@ -32,6 +34,8 @@ class CreateCommand implements BaseCommandInterface
     {
         $this->getStartDate();
         $this->getFastType();
+        $this->setFastEndDate();
+        $this->saveFast();
     }
 
     protected function getStartDate()
@@ -43,12 +47,9 @@ class CreateCommand implements BaseCommandInterface
             $this->output->write($message);
             $this->getStartDate();
         }
-
-
         $this->newFast->set([
             'start' => $userInput
         ]);
-
     }
 
     protected function getFastType()
@@ -56,17 +57,54 @@ class CreateCommand implements BaseCommandInterface
         $this->output->write('Select a fast type');
         $this->printFastTypes();
         $userInput = $this->input->getInput();
+        if (!key_exists($userInput, $this->fastTypes)) {
+            $this->output->write('Please choose from existing types.');
+            $this->getFastType();
+        }
         $this->newFast->set([
-            'type' => FastType::fromValue($userInput)
+            'type' => $this->fastTypes[$userInput]['value']
         ]);
+        return;
+    }
+
+    protected function setFastTypes()
+    {
+        foreach (FastType::getAll() as $const => $value) {
+            $this->fastTypes[] = [
+                'const' => $const,
+                'value' => $value
+            ];
+        }
     }
 
     protected function printFastTypes()
     {
-        foreach (FastType::getAll() as $const => $value) {
-            $this->output->write($const . "($value" . 'h)');
+        foreach ($this->fastTypes as $key => $value) {
+            $this->output->write("[$key] " . $value['const'] . " ({$value['value']}" . 'h)');
         }
     }
 
+    protected function setFastEndDate()
+    {
+        $hours = 'PT' . $this->newFast->type . 'H';
+        $fastEndDate = $this->newFast
+            ->start
+            ->add(new \DateInterval("$hours"))
+            ->format('Y-m-d H:i:s');
 
+        $this->newFast->set([
+            'end' => $fastEndDate
+        ]);
+
+
+    }
+
+    protected function saveFast()
+    {
+        $storeFasts = $this->store->getAll()->toArray();
+
+        $storeFasts[] = $this->newFast;
+
+        $this->store->write($storeFasts);
+    }
 }
