@@ -7,9 +7,10 @@ use App\Enums\Status;
 use App\Interface\FastModelInterface;
 use DateTime;
 use Exception;
+use JsonSerializable;
 
 
-class Fast implements FastModelInterface
+class Fast implements FastModelInterface, JsonSerializable
 {
     protected array $dates = [
         'start',
@@ -27,10 +28,10 @@ class Fast implements FastModelInterface
 
     /**
      * @param $parameter
-     * @return DateTime|mixed
+     * @return DateTime|int|string
      * @throws Exception
      */
-    public function __get($parameter)
+    public function __get($parameter): DateTime|int|string
     {
         if (in_array($parameter, $this->dates)) {
             return new DateTime($this->{$parameter});
@@ -46,7 +47,11 @@ class Fast implements FastModelInterface
         }
     }
 
-    public function __toString()
+
+    /**
+     * @return string
+     */
+    public function print(): string
     {
         $type = FastType::fromValue($this->type);
         $status = Status::fromValue($this->status);
@@ -55,7 +60,8 @@ class Fast implements FastModelInterface
         return "
         --------------------------------------
         Status ($status)  \n\r
-        Started Fasting $this->start \n\r   
+        Started Fasting $this->start \n\r  
+        End date $this->end \n\r 
         Fast Type $type({$this->type}h) \n\r
         Elapsed Time $this->elapsedTime;
         --------------------------------------
@@ -65,6 +71,17 @@ class Fast implements FastModelInterface
     public function setElapsedTime($time)
     {
         $this->elapsedTime = $time;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            "status" => $this->status,
+            "start" => $this->start,
+            "end" => $this->end,
+            "type" => $this->type,
+            "elapsed_time" => $this->elapsedTime
+        ];
     }
 }
 
