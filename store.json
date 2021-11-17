@@ -1,16 +1,37 @@
 [
   {
     "status": 0,
-    "start": "2021-10-05 12:12:00",
-    "end": "2022-12-05 12:12:00",
-    "elapsed_time": "00 years 1 months 11 days 06 h 41 min 47 sec",
-    "type": 20
+    "start": "2021-11-22 10:00:00",
+    "end": "2021-11-22 10:00:00",
+    "type": 16,
+    "elapsed_time": "00 years 0 months 4 days 19 h 54 min 37 sec"
   },
   {
     "status": 0,
-    "start": "2021-10-05 12:12:00",
-    "end": "2021-10-05 12:12:00",
-    "elapsed_time": "00 years 1 months 11 days 06 h 41 min 47 sec",
-    "type": 12
+    "start": "2021-11-22 10:00:00",
+    "end": "2021-11-22 10:00:00",
+    "type": 16,
+    "elapsed_time": "00 years 0 months 4 days 19 h 54 min 37 sec"
+  },
+  {
+    "status": 0,
+    "start": "2021-11-22 10:00:00",
+    "end": "2021-11-22 10:00:00",
+    "type": 16,
+    "elapsed_time": "00 years 0 months 4 days 19 h 54 min 37 sec"
+  },
+  {
+    "status": 0,
+    "start": "2021-11-18 20:00:00",
+    "end": "2021-11-19 16:00:00",
+    "type": 20,
+    "elapsed_time": "00 years 0 months 1 days 05 h 54 min 37 sec"
+  },
+  {
+    "status": 0,
+    "start": "2021-11-18 10:00:00",
+    "end": "2021-11-19 06:00:00",
+    "type": 20,
+    "elapsed_time": ""
   }
 ]
