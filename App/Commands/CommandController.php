@@ -21,8 +21,17 @@ class CommandController implements BaseCommandInterface
 
     protected bool $noCondition = true;
 
+    /**
+     * @var array|string[][]
+     */
+
 
     private array $menu = [
+        [
+            'option' => 'Check the fast status',
+            'command' => CheckCommand::class,
+            'condition' => 'noCondition'
+        ],
         [
             'option' => 'Create Fast',
             'command' => CreateCommand::class,
@@ -32,7 +41,13 @@ class CommandController implements BaseCommandInterface
             'option' => 'Update an active fast',
             'command' => UpdateCommand::class,
             'condition' => 'activeFasts',
-            'operand' => '> 0'
+
+        ],
+        [
+            'option' => 'End an active fast',
+            'command' => EndCommand::class,
+            'condition' => 'activeFasts',
+
         ],
         [
             'option' => 'List all fasts',
@@ -58,26 +73,16 @@ class CommandController implements BaseCommandInterface
 
     public function run()
     {
-
         while ($this->appRunning) {
             $this->updateActiveFast();
             $this->updateCanCreate();
             $this->printMenu();
             $input = $this->input->getInput();
-            if (!key_exists($input, $this->menu)) {
-                $this->run();
+            if (key_exists($input, $this->menu)) {
+                $command = new $this->menu[$input]['command']($this->input, $this->output, $this->store);
+                $command->run();
             }
-            $command = new $this->menu[$input]['command']($this->input, $this->output, $this->store);
-
-            $command->run();
-
         }
-
-    }
-
-    public function exit()
-    {
-        $this->appRunning = false;
     }
 
     public function printMenu()
@@ -92,19 +97,11 @@ class CommandController implements BaseCommandInterface
 
     private function updateActiveFast()
     {
-        /**
-         * @var $fasts Collection
-         */
-        $fasts = $this->store->getAll();
-        $fasts->each(callback: function ($key, $fast) {
-
-            if ($fast->status == Status::ACTIVE) {
-
-                $this->activeFasts = true;
-
-            }
-        });
-
+        if ($this->store->hasActiveFasts()) {
+            $this->activeFasts = true;
+            return;
+        }
+        $this->activeFasts = false;
     }
 
     private function updateCanCreate()

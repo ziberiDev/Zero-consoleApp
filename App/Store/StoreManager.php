@@ -2,10 +2,7 @@
 
 namespace App\Store;
 
-use App\Enums\Status;
-use App\Interface\FileManagerInterface;
-use App\Model\Collection;
-use App\Model\Fast;
+use App\{Enums\Status, Interface\FileManagerInterface, Model\Collection, Model\Fast};
 use DateTime;
 
 
@@ -14,9 +11,8 @@ class StoreManager implements FileManagerInterface
 
     protected string $file = "./store.json";
 
-
     /**
-     * @return void
+     * @return Collection
      */
     public function getAll(): Collection
     {
@@ -48,31 +44,68 @@ class StoreManager implements FileManagerInterface
         return new Collection($fastArray);
     }
 
+    /**
+     * @return bool
+     */
     public function hasActiveFasts(): bool
     {
         $hasActive = false;
         $fasts = $this->getAll();
 
         if (!$fasts->toArray()) {
-            $hasActive = false;
+            return $hasActive;
         }
-
         $fasts->each(function ($key, $fast) use (&$hasActive) {
             if ($fast->status == Status::ACTIVE) {
                 $hasActive = true;
             }
         });
-
         return $hasActive;
     }
 
+    /**
+     * @param $key
+     */
     public function select($key)
     {
         // TODO: Implement select() method.
     }
 
+    /**
+     * @return false|Fast
+     */
+    public function getActiveFast(): bool|Fast
+    {
+        if (!$this->hasActiveFasts()) return false;
+
+        $fasts = $this->getAll();
+        $activeFast = false;
+
+        $fasts->each(function ($key, $fast) use (&$activeFast) {
+            if ($fast->status == Status::ACTIVE) {
+                $activeFast = $fast;
+            }
+        });
+        return $activeFast;
+    }
+
+
     public function write($fasts)
     {
         file_put_contents($this->file, json_encode($fasts));
+    }
+
+    public function deleteActiveFast()
+    {
+        $fasts = $this->getAll();
+        $fastsWithoutActiveFasts = [];
+
+        $fasts->each(function ($key, $fast) use (&$fastsWithoutActiveFasts) {
+            if ($fast->status == Status::INACTIVE) {
+                $fastsWithoutActiveFasts[] = $fast;
+            }
+        });
+
+        $this->write($fastsWithoutActiveFasts);
     }
 }

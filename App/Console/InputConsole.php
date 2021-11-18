@@ -6,17 +6,11 @@ use App\Model\Fast;
 
 class InputConsole
 {
-
+    /**
+     * @return string
+     */
     public function getInput()
     {
-
-        //TODO:refactor
-
-        $stdin = fopen('php://stdin', 'r');
-
-
-        return trim(fgets($stdin), "\n\r");
+        return trim(fgets(STDIN));
     }
-
-
 }

@@ -9,8 +9,12 @@ use App\Store\StoreManager;
 
 interface BaseCommandInterface
 {
-
-    public function __construct(InputConsole $input, OutputConsole $output , StoreManager  $store);
+    /**
+     * @param InputConsole $input
+     * @param OutputConsole $output
+     * @param StoreManager $store
+     */
+    public function __construct(InputConsole $input, OutputConsole $output, StoreManager $store);
 
     public function run();
 

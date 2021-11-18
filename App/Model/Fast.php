@@ -7,6 +7,7 @@ use App\Enums\Status;
 use App\Interface\FastModelInterface;
 use DateTime;
 use Exception;
+use JetBrains\PhpStorm\ArrayShape;
 use JsonSerializable;
 
 
@@ -58,22 +59,29 @@ class Fast implements FastModelInterface, JsonSerializable
 
 
         return "
-        --------------------------------------
-        Status ($status)  \n\r
-        Started Fasting $this->start \n\r  
-        End date $this->end \n\r 
-        Fast Type $type({$this->type}h) \n\r
-        Elapsed Time $this->elapsedTime;
-        --------------------------------------
+--------------------------------------
+Status ($status)  \n\r
+Started Fasting $this->start \n\r  
+End date $this->end \n\r 
+Fast Type $type({$this->type}h) \n\r
+Elapsed Time $this->elapsedTime; \n\r
+--------------------------------------
         ";
     }
 
+    /**
+     * @param $time
+     */
     public function setElapsedTime($time)
     {
         $this->elapsedTime = $time;
     }
 
-    public function jsonSerialize()
+    /**
+     * @return array
+     */
+    #[ArrayShape(["status" => "int", "start" => "string", "end" => "string", "type" => "int", "elapsed_time" => "string"])]
+    public function jsonSerialize(): array
     {
         return [
             "status" => $this->status,

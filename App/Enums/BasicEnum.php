@@ -8,6 +8,10 @@ abstract class BasicEnum
 {
     private static array|null $constCacheArray = NULL;
 
+    /**
+     * @return array|mixed
+     * @throws \ReflectionException
+     */
     private static function getConstants()
     {
         if (self::$constCacheArray == NULL) {
@@ -23,7 +27,8 @@ abstract class BasicEnum
 
     /**
      * @param mixed $value
-     * @return false|int|string
+     * @return bool|int|string
+     * @throws \ReflectionException
      */
     public static function fromValue(mixed $value): bool|int|string
     {
@@ -42,6 +47,10 @@ abstract class BasicEnum
         return array_key_exists($value, $constants);
     }
 
+    /**
+     * @return array|mixed
+     * @throws \ReflectionException
+     */
     public static function getAll()
     {
         return self::getConstants();
