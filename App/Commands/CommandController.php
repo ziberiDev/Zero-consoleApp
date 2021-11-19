@@ -2,12 +2,9 @@
 
 namespace App\Commands;
 
-use App\Console\InputConsole;
-use App\Console\OutputConsole;
-use App\Enums\Status;
-use App\Interface\BaseCommandInterface;
-use App\Interface\FileManagerInterface;
-use App\Model\Collection;
+use App\Console\{InputConsole, InputValidator, OutputConsole};
+use App\Interface\{BaseCommandInterface , FileManagerInterface};
+use App\Model\Fast;
 
 
 class CommandController implements BaseCommandInterface
@@ -21,10 +18,7 @@ class CommandController implements BaseCommandInterface
 
     protected bool $noCondition = true;
 
-    /**
-     * @var array|string[][]
-     */
-
+    protected array $availableCommands = [];
 
     private array $menu = [
         [
@@ -65,7 +59,9 @@ class CommandController implements BaseCommandInterface
     public function __construct(
         protected InputConsole         $input,
         protected OutputConsole        $output,
-        protected FileManagerInterface $store
+        protected FileManagerInterface $store,
+        protected InputValidator       $validator,
+        protected Fast                 $newFast,
     )
     {
     }
@@ -74,28 +70,47 @@ class CommandController implements BaseCommandInterface
     public function run()
     {
         while ($this->appRunning) {
-            $this->updateActiveFast();
-            $this->updateCanCreate();
-            $this->printMenu();
+            $this->updateActiveFastParameter();
+            $this->updateCanCreateParameter();
+            $this->adjustMenuAndPrint();
             $input = $this->input->getInput();
             if (key_exists($input, $this->menu)) {
-                $command = new $this->menu[$input]['command']($this->input, $this->output, $this->store);
+                /**
+                 * @var $command BaseCommandInterface
+                 */
+                $command = new $this->availableCommands[$input](
+                    $this->input,
+                    $this->output,
+                    $this->store,
+                    $this->validator,
+                    $this->newFast,
+                );
                 $command->run();
+            } else {
+                $this->output->writeYellow('Please select a specific command.');
             }
         }
     }
 
-    public function printMenu()
+    public function adjustMenuAndPrint()
     {
+        $counter = 0;
         foreach ($this->menu as $key => $bundle) {
+            ++$counter;
             $condition = $bundle['condition'];
             if ($this->{$condition}) {
-                $this->output->write("[" . $key . "] " . $bundle['option']);
+                $this->output->write("[" . $counter . "] " . $bundle['option']);
+                $this->availableCommands[$counter] = $bundle['command'];
+            } else {
+                $counter--;
             }
         }
     }
 
-    private function updateActiveFast()
+    /**
+     * @throws \Exception
+     */
+    private function updateActiveFastParameter()
     {
         if ($this->store->hasActiveFasts()) {
             $this->activeFasts = true;
@@ -104,7 +119,10 @@ class CommandController implements BaseCommandInterface
         $this->activeFasts = false;
     }
 
-    private function updateCanCreate()
+    /**
+     * @throws \Exception
+     */
+    private function updateCanCreateParameter()
     {
         if (!$this->store->hasActiveFasts()) {
             $this->canCreate = true;
@@ -112,6 +130,4 @@ class CommandController implements BaseCommandInterface
         }
         $this->canCreate = false;
     }
-
-
 }

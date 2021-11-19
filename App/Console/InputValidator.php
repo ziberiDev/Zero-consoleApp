@@ -9,10 +9,11 @@ class InputValidator
 {
 
     /**
-     * @param $input
+     * Validates passed string if it is in (Y-m-d H:i:s) date format
+     * @param string $input
      * @return false|string
      */
-    public function validateStartdate($input)
+    public function validateStartDate(string $input): bool|string
     {
         $dateInputObject = DateTime::createFromFormat("Y-m-d H:i:s", $input);
         $today = new DateTime('NOW');

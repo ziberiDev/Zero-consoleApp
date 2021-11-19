@@ -4,6 +4,7 @@ namespace App\Store;
 
 use App\{Enums\Status, Interface\FileManagerInterface, Model\Collection, Model\Fast};
 use DateTime;
+use Exception;
 
 
 class StoreManager implements FileManagerInterface
@@ -12,7 +13,9 @@ class StoreManager implements FileManagerInterface
     protected string $file = "./store.json";
 
     /**
+     * Fetches all fasts from store.json if any and returns a collection
      * @return Collection
+     * @throws Exception
      */
     public function getAll(): Collection
     {
@@ -32,12 +35,18 @@ class StoreManager implements FileManagerInterface
                 type: $fast->type
             );
             if ($fast->status === Status::ACTIVE && $newFast->start < $today) {
-                $newFast->setElapsedTime($today
-                    ->diff($newFast->start)
-                    ->format('%Y years %m months %d days %H h %i min %s sec'));
+                $newFast->set(
+                    [
+                        'elapsedTime' => $today
+                            ->diff($newFast->start)
+                            ->format('%Y years %m months %d days %H h %i min %s sec')
+                    ]
+                );
 
             } else {
-                $newFast->setElapsedTime($fast->elapsed_time);
+                $newFast->set([
+                    'elapsedTime' => $fast->elapsed_time
+                ]);
             }
             $fastArray[] = $newFast;
         }
@@ -45,7 +54,9 @@ class StoreManager implements FileManagerInterface
     }
 
     /**
+     * Checks if there are any active fasts in file.
      * @return bool
+     * @throws Exception
      */
     public function hasActiveFasts(): bool
     {
@@ -72,6 +83,7 @@ class StoreManager implements FileManagerInterface
     }
 
     /**
+     * Returns an active fast as Fast or falls on fail
      * @return false|Fast
      */
     public function getActiveFast(): bool|Fast
@@ -89,12 +101,18 @@ class StoreManager implements FileManagerInterface
         return $activeFast;
     }
 
-
+    /**
+     * Writes the past parameter into the store file.
+     * @param  $fasts
+     */
     public function write($fasts)
     {
         file_put_contents($this->file, json_encode($fasts));
     }
 
+    /**
+     * Delete an Active fast from store file
+     */
     public function deleteActiveFast()
     {
         $fasts = $this->getAll();

@@ -43,6 +43,11 @@ class Collection implements Iterator
         return reset($this->items);
     }
 
+    /**
+     * Iterates the collection over a callback function
+     * @param callable $callback
+     * @return $this|false
+     */
     public function each(callable $callback)
     {
         foreach ($this as $key => $value) {
@@ -53,6 +58,10 @@ class Collection implements Iterator
         return $this;
     }
 
+    /**
+     * Returns collection as an array
+     * @return array
+     */
     public function toArray()
     {
         return $this->items;

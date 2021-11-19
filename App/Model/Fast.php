@@ -18,6 +18,14 @@ class Fast implements FastModelInterface, JsonSerializable
         'end'
     ];
 
+    protected array $fillable = [
+        'start',
+        'status',
+        'end',
+        'type',
+        'elapsedTime'
+    ];
+
     public function __construct(
         protected string $start = '',
         protected int    $status = 1,
@@ -41,40 +49,33 @@ class Fast implements FastModelInterface, JsonSerializable
         return $this->$parameter;
     }
 
+    /**
+     * Global params setter for fillable properties of Fast class.
+     * @param array $params
+     * @throws Exception
+     */
     public function set(array $params)
     {
         foreach ($params as $param => $value) {
+            if (!in_array($param, $this->fillable)) throw new Exception("Cannot set property {$param} of " . get_class($this));
             $this->$param = $value;
         }
     }
 
-
     /**
      * @return string
+     * @throws \ReflectionException
      */
     public function print(): string
     {
-        $type = FastType::fromValue($this->type);
-        $status = Status::fromValue($this->status);
-
-
         return "
 --------------------------------------
-Status ($status)  \n\r
+Status (" . Status::fromValue($this->status) . ")  \n\r
 Started Fasting $this->start \n\r  
 End date $this->end \n\r 
-Fast Type $type({$this->type}h) \n\r
+Fast Type " . FastType::fromValue($this->type) . "({$this->type}h) \n\r
 Elapsed Time $this->elapsedTime; \n\r
---------------------------------------
-        ";
-    }
-
-    /**
-     * @param $time
-     */
-    public function setElapsedTime($time)
-    {
-        $this->elapsedTime = $time;
+-------------------------------------- ";
     }
 
     /**
