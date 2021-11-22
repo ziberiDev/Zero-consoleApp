@@ -1,0 +1,73 @@
+[33mcommit 9a3c83c05aed9cdf7cf323b11115d88b58035b95[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/develop[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mdevelop[m[33m)[m
+Author: Denis Ziberi <denis24951@gmail.com>
+Date:   Fri Nov 19 15:52:21 2021 +0100
+
+    modified gitignore
+
+ .gitignore    |  2 [32m+[m[31m-[m
+ composer.lock | 18 [31m------------------[m
+ 2 files changed, 1 insertion(+), 19 deletions(-)
+
+[33mcommit 4b8a69dd3971809c91d0a8d0c9f1e6fd5748c070[m
+Author: ziberiDev <92785026+ziberiDev@users.noreply.github.com>
+Date:   Fri Nov 19 15:47:02 2021 +0100
+
+    Delete vendor directory
+
+ vendor/autoload.php                     |   7 [31m-[m
+ vendor/composer/ClassLoader.php         | 479 [31m--------------------------------[m
+ vendor/composer/InstalledVersions.php   | 299 [31m--------------------[m
+ vendor/composer/LICENSE                 |  21 [31m--[m
+ vendor/composer/autoload_classmap.php   |  10 [31m-[m
+ vendor/composer/autoload_namespaces.php |   9 [31m-[m
+ vendor/composer/autoload_psr4.php       |  10 [31m-[m
+ vendor/composer/autoload_real.php       |  55 [31m----[m
+ vendor/composer/autoload_static.php     |  36 [31m---[m
+ vendor/composer/installed.json          |   5 [31m-[m
+ vendor/composer/installed.php           |  24 [31m--[m
+ 11 files changed, 955 deletions(-)
+
+[33mcommit ac385a5c653d2c511a52b447c0aeb323ad6041d6[m
+Author: Denis Ziberi <denis24951@gmail.com>
+Date:   Fri Nov 19 15:42:29 2021 +0100
+
+    edit redme
+
+ README.md | 2 [32m+[m[31m-[m
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+[33mcommit 88a327b69f037bde5bfcb987e3727bfc5033581d[m
+Author: Denis Ziberi <denis24951@gmail.com>
+Date:   Fri Nov 19 15:40:54 2021 +0100
+
+    edited redme file with app instructions
+
+ README.md | 15 [32m++++++++++++++[m[31m-[m
+ 1 file changed, 14 insertions(+), 1 deletion(-)
+
+[33mcommit 53e8b487273c686d005531f7c2999bd426f88ef0[m
+Merge: 6a8f9eb d28b70c
+Author: Denis Ziberi <denis24951@gmail.com>
+Date:   Fri Nov 19 15:30:13 2021 +0100
+
+    Merge branch 'develop' into main
+
+[33mcommit 6a8f9ebfd21454bc78bb88e0703b7fa17a5d9913[m
+Author: Denis Ziberi <denis24951@gmail.com>
+Date:   Fri Nov 19 15:29:36 2021 +0100
+
+    sad
+
+ composer.lock                           |  18 [32m++[m
+ vendor/autoload.php                     |   7 [32m+[m
+ vendor/composer/ClassLoader.php         | 479 [32m++++++++++++++++++++++++++++++++[m
+ vendor/composer/InstalledVersions.php   | 299 [32m++++++++++++++++++++[m
+ vendor/composer/LICENSE                 |  21 [32m++[m
+ vendor/composer/autoload_classmap.php   |  10 [32m+[m
+ vendor/composer/autoload_namespaces.php |   9 [32m+[m
+ vendor/composer/autoload_psr4.php       |  10 [32m+[m
+ vendor/composer/autoload_real.php       |  55 [32m++++[m
+ vendor/composer/autoload_static.php     |  36 [32m+++[m
+ vendor/composer/installed.json          |   5 [32m+[m
+ vendor/composer/installed.php           |  24 [32m++[m
+ 12 files changed, 973 insertions(+)

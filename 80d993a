@@ -1,0 +1,23 @@
+[33m9a3c83c[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/develop[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mdevelop[m[33m)[m modified gitignore
+[33m4b8a69d[m Delete vendor directory
+[33mac385a5[m edit redme
+[33m88a327b[m edited redme file with app instructions
+[33m53e8b48[m Merge branch 'develop' into main
+[33m6a8f9eb[m sad
+[33md28b70c[m final commit before merge to master
+[33m0056a76[m too much to commit
+[33m24db1a3[m small functionality changes on printing menu
+[33meacd34d[m updated files
+[33m32cbb08[m getAll method updated if store is empty return empty collection write method implemented
+[33m6609a2c[m Fast model added jsonSerialize method and print method
+[33m2c62839[m Collection class added a toArray method
+[33m4fb396c[m FileManagerInterface write method accepts array
+[33m4481a40[m listFasts changed Fast print function added
+[33m12bece5[m updated Create command
+[33mfc41b8a[m CommandController update updateCanCreate if store is empty add true
+[33mead243d[m update
+[33m42735d1[m Inputvalidation and CreateFast command
+[33m49c6996[m implemented listing for fasts
+[33m41e202c[m Created main coman controller StoreManager
+[33me30dd2f[m init
+[33m80d993a[m Initial commit
