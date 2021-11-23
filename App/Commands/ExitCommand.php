@@ -7,28 +7,23 @@ use App\{Console\InputConsole,
     Console\OutputConsole,
     Interface\BaseCommandInterface,
     Store\StoreManager,
-    Model\Fast
-};
-
+    Model\Fast};
 
 class ExitCommand extends BaseCommandController implements BaseCommandInterface
 {
-
     public function __construct(
         protected InputConsole   $input,
         protected OutputConsole  $output,
         protected StoreManager   $store,
         protected InputValidator $validator,
         protected Fast           $newFast
-    )
-    {
-    }
+    ){}
 
     public function run()
     {
         $userInput = $this->askForConfirmation("Are you sure you want to exit the app?");
         if (!$this->confirmationOptions[$userInput]) return;
-        $this->output->writeGreen('See you soon.. Goodbye....');
+        $this->output->write('See you soon.. Goodbye....', 'green');
         exit;
     }
 }

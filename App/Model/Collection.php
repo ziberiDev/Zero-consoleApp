@@ -2,43 +2,33 @@
 
 namespace App\Model;
 
-
 use Iterator;
 
 class Collection implements Iterator
 {
+    public function __construct(protected array $items){}
 
-
-    public function __construct(protected array $items)
-    {
-    }
-
-    public
-    function current()
+    public function current()
     {
         return current($this->items);
     }
 
-    public
-    function next()
+    public function next()
     {
         return next($this->items);
     }
 
-    public
-    function key()
+    public function key()
     {
         return key($this->items);
     }
 
-    public
-    function valid()
+    public function valid()
     {
         return current($this->items) !== false;
     }
 
-    public
-    function rewind()
+    public function rewind()
     {
         return reset($this->items);
     }
@@ -48,7 +38,7 @@ class Collection implements Iterator
      * @param callable $callback
      * @return $this|false
      */
-    public function each(callable $callback)
+    public function each(callable $callback): bool|static
     {
         foreach ($this as $key => $value) {
             if ($callback($key, $value) === false) {

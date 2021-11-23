@@ -2,7 +2,6 @@
 
 namespace App\Interface;
 
-
 interface FastModelInterface
 {
     /**

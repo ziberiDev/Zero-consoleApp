@@ -3,9 +3,8 @@
 namespace App\Commands;
 
 use App\Console\{InputConsole, InputValidator, OutputConsole};
-use App\Interface\{BaseCommandInterface , FileManagerInterface};
+use App\Interface\{BaseCommandInterface, FileManagerInterface};
 use App\Model\Fast;
-
 
 class CommandController implements BaseCommandInterface
 {
@@ -62,10 +61,7 @@ class CommandController implements BaseCommandInterface
         protected FileManagerInterface $store,
         protected InputValidator       $validator,
         protected Fast                 $newFast,
-    )
-    {
-    }
-
+    ){}
 
     public function run()
     {
@@ -87,7 +83,7 @@ class CommandController implements BaseCommandInterface
                 );
                 $command->run();
             } else {
-                $this->output->writeYellow('Please select a specific command.');
+                $this->output->write('Please select a specific command.', 'yellow');
             }
         }
     }

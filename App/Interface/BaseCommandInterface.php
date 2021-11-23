@@ -2,7 +2,6 @@
 
 namespace App\Interface;
 
-
 use App\Console\InputConsole;
 use App\Console\InputValidator;
 use App\Console\OutputConsole;
@@ -27,5 +26,4 @@ interface BaseCommandInterface
     );
 
     public function run();
-
 }

@@ -31,8 +31,8 @@ class Fast implements FastModelInterface, JsonSerializable
         protected int    $status = 1,
         protected string $end = '',
         protected int    $type = 0,
-        protected string $elapsedTime = '')
-    {
+        protected string $elapsedTime = ''
+    ){
     }
 
     /**

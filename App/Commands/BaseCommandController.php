@@ -25,8 +25,7 @@ class BaseCommandController
         protected StoreManager   $store,
         protected InputValidator $validator,
         protected Fast           $newFast
-    )
-    {
+    ){
         $this->setFastTypes();
     }
 
@@ -36,11 +35,11 @@ class BaseCommandController
      */
     protected function getStartDate()
     {
-        $this->output->writeYellow('Enter Start Date of Fast format:(Y-m-d H:i:s) => (2020-10-10 20:00:00)');
+        $this->output->write('Enter Start Date of Fast format:(Y-m-d H:i:s) => (2020-10-10 20:00:00)', 'yellow');
         $userInput = $this->input->getInput();
 
         while ($message = $this->validator->validateStartDate($userInput)) {
-            $this->output->writeError($message);
+            $this->output->write($message, 'red');
             $userInput = $this->input->getInput();
         }
         $this->newFast->set([
@@ -54,13 +53,12 @@ class BaseCommandController
      */
     protected function getFastType()
     {
-        $this->output->writeYellow('Select a fast type');
+        $this->output->write('Select a fast type', 'yellow');
         $this->printFastTypes();
         $userInput = $this->input->getInput();
 
-        while (!key_exists($userInput, $this->fastTypes)) {
-            $this->output->writeError('Please choose from existing types.');
-
+        while (!isset($this->fastTypes[$userInput])) {
+            $this->output->write('Please choose from existing types.', 'red');
             $userInput = $this->input->getInput();
         }
         $this->newFast->set([
@@ -87,7 +85,7 @@ class BaseCommandController
     protected function printFastTypes()
     {
         foreach ($this->fastTypes as $key => $value) {
-            $this->output->writeYellow("[$key] " . $value['const'] . " ({$value['value']}" . 'h)');
+            $this->output->write("[$key] " . $value['const'] . " ({$value['value']}" . 'h)', 'yellow');
         }
     }
 
@@ -133,7 +131,7 @@ class BaseCommandController
 
     protected function askForConfirmation(string $question): string
     {
-        $this->output->writeYellow($question);
+        $this->output->write($question, 'yellow');
         $this->printConfirmationMenu();
         return strtoupper($this->input->getInput());
     }
@@ -141,7 +139,7 @@ class BaseCommandController
     private function printConfirmationMenu()
     {
         foreach ($this->confirmationOptions as $key => $value) {
-            $this->output->writeYellow("[$key]");
+            $this->output->write("[$key]", 'yellow');
         }
     }
 }

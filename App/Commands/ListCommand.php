@@ -2,10 +2,10 @@
 
 namespace App\Commands;
 
-use App\Console\{InputConsole , InputValidator , OutputConsole};
+use App\Console\{InputConsole, InputValidator, OutputConsole};
 use App\Enums\Status;
 use App\Interface\BaseCommandInterface;
-use App\Model\{Collection , Fast};
+use App\Model\{Collection, Fast};
 use App\Store\StoreManager;
 
 class ListCommand implements BaseCommandInterface
@@ -17,9 +17,7 @@ class ListCommand implements BaseCommandInterface
         protected StoreManager   $store,
         protected InputValidator $validator,
         protected Fast           $newFast
-    )
-    {
-    }
+    ){}
 
     public function run()
     {
@@ -35,9 +33,11 @@ class ListCommand implements BaseCommandInterface
     {
         $fasts->each(function ($key, $fast) {
             if ($fast->status !== Status::ACTIVE) {
-                $this->output->writeError("Fast number:$key {$fast->print()}");
+                $this->output->write("Fast number:$key {$fast->print()}", 'red');
+
+            }else{
+                $this->output->write("Fast number:$key {$fast->print()}", 'green');
             }
-            $this->output->writeGreen("Fast number:$key {$fast->print()}");
         });
     }
 }

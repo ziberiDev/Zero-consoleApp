@@ -6,13 +6,12 @@ use App\Interface\BaseCommandInterface;
 
 class CheckCommand extends BaseCommandController implements BaseCommandInterface
 {
-
     public function run()
     {
         if (!$activeFast = $this->store->getActiveFast()) {
-            $this->output->writeError('You have no active fast please create one.');
+            $this->output->write('You have no active fast please create one.', 'red');
             return;
         }
-        $this->output->writeGreen($activeFast->print());
+        $this->output->write($activeFast->print(), 'green');
     }
 }

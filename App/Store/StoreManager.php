@@ -2,7 +2,7 @@
 
 namespace App\Store;
 
-use App\{Enums\Status, Interface\FileManagerInterface, Model\Collection, Model\Fast};
+use App\{Enums\Status, Helpers\Json, Interface\FileManagerInterface, Model\Collection, Model\Fast};
 use DateTime;
 use Exception;
 
@@ -10,7 +10,21 @@ use Exception;
 class StoreManager implements FileManagerInterface
 {
 
-    protected string $file = "./store.json";
+    protected string $file;
+
+    public function __construct()
+    {
+        if (!file_exists($_ENV['APP_STORAGE'])) {
+            try {
+                fopen($_ENV['APP_STORAGE'], 'w');
+            } catch (\Throwable $e) {
+
+            }
+
+        }
+        $this->file = $_ENV['APP_STORAGE'];
+
+    }
 
     /**
      * Fetches all fasts from store.json if any and returns a collection
@@ -21,8 +35,8 @@ class StoreManager implements FileManagerInterface
     {
         $today = new DateTime('NOW');
         $fastArray = [];
-        $storeFasts = json_decode(
-            file_get_contents($this->file)
+        $storeFasts = Json::decode(
+            file_get_contents("$this->file")
             , false);
         if (!$storeFasts) {
             return new Collection([]);
@@ -83,8 +97,8 @@ class StoreManager implements FileManagerInterface
     }
 
     /**
-     * Returns an active fast as Fast or falls on fail
-     * @return false|Fast
+     * @return bool|Fast
+     * @throws Exception
      */
     public function getActiveFast(): bool|Fast
     {
@@ -107,7 +121,7 @@ class StoreManager implements FileManagerInterface
      */
     public function write($fasts)
     {
-        file_put_contents($this->file, json_encode($fasts));
+        file_put_contents($this->file, Json::encode($fasts));
     }
 
     /**

@@ -8,8 +8,6 @@ use DateTime;
 
 class EndCommand extends BaseCommandController implements BaseCommandInterface
 {
-
-
     public function run()
     {
         $today = new DateTime('NOW');
@@ -34,5 +32,4 @@ class EndCommand extends BaseCommandController implements BaseCommandInterface
             $this->save($activeFast);
         }
     }
-
 }

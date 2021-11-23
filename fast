@@ -9,7 +9,8 @@ use App\Model\Fast;
 use App\Store\StoreManager;
 
 require_once './vendor/autoload.php';
-
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__, '.env');
+$dotenv->load();
 
 $commands = new CommandController(
     new InputConsole(),
