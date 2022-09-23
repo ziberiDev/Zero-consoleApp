@@ -88,13 +88,6 @@ class StoreManager implements FileManagerInterface
         return $hasActive;
     }
 
-    /**
-     * @param $key
-     */
-    public function select($key)
-    {
-        // TODO: Implement select() method.
-    }
 
     /**
      * @return bool|Fast
