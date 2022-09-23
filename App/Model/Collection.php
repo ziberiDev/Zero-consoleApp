@@ -8,29 +8,29 @@ class Collection implements Iterator
 {
     public function __construct(protected array $items){}
 
-    public function current()
+    public function current() : mixed
     {
         return current($this->items);
     }
 
-    public function next()
+    public function next() :void
     {
-        return next($this->items);
+         next($this->items);
     }
 
-    public function key()
+    public function key() : mixed
     {
         return key($this->items);
     }
 
-    public function valid()
+    public function valid() : bool
     {
         return current($this->items) !== false;
     }
 
-    public function rewind()
+    public function rewind() : void
     {
-        return reset($this->items);
+         reset($this->items);
     }
 
     /**
